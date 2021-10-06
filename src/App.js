@@ -1,11 +1,15 @@
 import './App.css';
+import Question from './components/Question';
+import SurveyChart from './components/SurveyChart';
 
-function App() {
+const App = () => {
+
   return (
     <div className="App">
-      <div>Survey App</div>
+      <SurveyChart />
+      <Question />
     </div>
-  );
+  )
 }
 
 export default App;
