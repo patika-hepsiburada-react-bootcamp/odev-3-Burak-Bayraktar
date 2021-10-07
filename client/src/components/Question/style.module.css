@@ -1,0 +1,19 @@
+.form {
+    @apply w-[600px] m-auto;
+}
+
+.questionText {
+    @apply w-full text-center mt-8 p-4 text-xl;
+}
+
+.answer {
+    @apply block p-2 text-xl;
+}
+
+.answerText {
+    @apply text-xl;
+}
+.button {
+    @apply w-full text-base m-0 p-3 mt-4 text-black border-solid border-2 border-black transition delay-[50ms] duration-100 ease-in-out;
+    @apply hover:text-white hover:bg-black;
+}
