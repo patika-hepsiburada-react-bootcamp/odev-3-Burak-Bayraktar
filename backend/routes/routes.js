@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Vote = require('../models/Vote');
 router.use(express.json())
-router.use(require('cors'))
+// router.use(require('cors'))
 
 router.get('/votes', async (req, res) => {
     try {

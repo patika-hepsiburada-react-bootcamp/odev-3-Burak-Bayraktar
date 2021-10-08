@@ -6,10 +6,9 @@ const http = require('http');
 const server = http.createServer(app);
 const io = new Server(server);
 const routes = require('./routes/routes')
-const bodyParser = require('body-parser');
 require('dotenv/config')
-app.use(require('./routes/routes'))
 
+const votesRoute = require('./routes/routes')
 
 // kill port when CTRL+C, otherwise it throws an error.
 process.on('SIGINT', function() {
@@ -17,28 +16,30 @@ process.on('SIGINT', function() {
     process.exit(0);
 });
 
-// listen port
-const PORT = process.env.PORT || 3002;
-const s = app.listen(PORT, () => {
-    console.log("listening on *:3002")
-    app.get('/votes');
-    app.post('/votes');
-})
 
+app.use('/', votesRoute);
 
 io.on('connection', (socket) => {
     console.log('a user connected')
 
     socket.on('new-vote', (vote) => {
         console.log("vote: ", vote);
-        socket.emit('new-vote', vote);
+        socket.broadcast.emit('new-vote', vote);
     })
 
     socket.on('disconnect', () => console.log('a user disconnected'));
 })
 
+
+// listen port
+const PORT = process.env.PORT || 3002;
+server.listen(PORT, () => {
+    console.log("listening on *:3002")
+})
+
+
 mongoose
 .connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
-.then((mongoDb) => {
+.then(() => {
     console.log("connected");
 }).catch((err) => console.log(err))
