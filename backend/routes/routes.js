@@ -13,8 +13,20 @@ router.get('/votes', async (req, res) => {
     }
 })
 
+router.get('/votes/:vote', async (req, res) => {
+    try {
+        const vote = await Vote.find().where({ vote: req.params.vote });
+        res.json({
+            ...vote,
+            length: vote.length
+        })
+    } catch (error) {
+        
+    }
+})
+
+
 router.post('/votes', async (req,res) => {
-    console.log(req.body)
     const vote = new Vote({
         vote: req.body.vote,
     })

@@ -12,7 +12,6 @@ const votesRoute = require('./routes/routes')
 
 // kill port when CTRL+C, otherwise it throws an error.
 process.on('SIGINT', function() {
-    console.log( "\nGracefully shutting down from SIGINT (Ctrl-C)" );
     process.exit(0);
 });
 
@@ -39,7 +38,7 @@ server.listen(PORT, () => {
 
 
 mongoose
-.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
-.then(() => {
-    console.log("connected");
-}).catch((err) => console.log(err))
+    .connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log("connected");
+    }).catch((err) => console.log(err))
