@@ -16,7 +16,7 @@ const Question = () => {
     const saveVote = async (answer) => {
         connectToSocket();
 
-        await axios.post("/votes", {
+        await axios.post(`${process.env.REACT_APP_API_URL}/votes`, {
             vote: answer
         }).catch(err => console.log(err))
 

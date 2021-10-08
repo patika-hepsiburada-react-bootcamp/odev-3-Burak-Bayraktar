@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const fetchVotes = (answers, setVotes) => {
     answers.map((answer) => 
-    axios.get(`/votes/${answer}`, {headers: {"Access-Control-Allow-Origin": "*"}}).then(res => {
+    axios.get(`${process.env.REACT_APP_API_URL}/votes/${answer}`, {headers: {"Access-Control-Allow-Origin": "*"}}).then(res => {
         setVotes((prev) => {
             const result = {
                 ...prev,
