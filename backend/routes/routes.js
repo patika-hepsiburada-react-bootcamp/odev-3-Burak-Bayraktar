@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Vote = require('../models/Vote');
+const cors = require('cors')
+
 router.use(express.json())
-// router.use(require('cors'))
+router.use(cors())
 
 router.get('/votes', async (req, res) => {
     try {
@@ -24,7 +26,6 @@ router.get('/votes/:vote', async (req, res) => {
         
     }
 })
-
 
 router.post('/votes', async (req,res) => {
     const vote = new Vote({

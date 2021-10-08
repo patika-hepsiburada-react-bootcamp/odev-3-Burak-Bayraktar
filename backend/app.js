@@ -7,7 +7,6 @@ const server = http.createServer(app);
 const io = new Server(server);
 const routes = require('./routes/routes')
 require('dotenv/config')
-
 const votesRoute = require('./routes/routes')
 
 // kill port when CTRL+C, otherwise it throws an error.
