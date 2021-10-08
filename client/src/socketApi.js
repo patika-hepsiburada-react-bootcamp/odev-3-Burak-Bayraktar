@@ -3,7 +3,7 @@ import { io } from 'socket.io-client'
 let socket;
 export const connectToSocket = () => {
   console.log('Connectting');
-  socket = io('http://127.0.0.1:3002/', { transports: ['websocket' ]});
+  socket = io('http://127.0.0.1:5000/', { transports: ['websocket' ]});
     socket.on('connect', () => {
         console.log('connected');
       });
