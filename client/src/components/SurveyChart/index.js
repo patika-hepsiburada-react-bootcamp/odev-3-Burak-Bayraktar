@@ -4,16 +4,26 @@ import styles from './style.module.css'
 import axios from 'axios'
 import { questions } from '../../constants'
 import { styling } from './chartConfig'
+import { connectToSocket, subscribeToNewVote } from '../../socketApi'
 const SurveyChart = () => {
     const { answers } = questions[0]
     const labels = answers
     const values = [10,20,30]
     
     useEffect(() => {
-        axios.get("http://localhost:3002/votes").then(res => {
+        axios.get("/votes", {headers: {"Access-Control-Allow-Origin": "*"}}).then(res => {
             console.log(res.data)
-        })
+        }).catch(err => console.log(err))
     }, [])
+
+    useEffect(() => {
+        connectToSocket();
+    
+        subscribeToNewVote((message) => {
+          console.log(message);
+        //   setChat((prev) => [...prev, { message }]);
+        });
+      }, []);
 
     const data = {
         labels: labels,

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styles from './style.module.css'
 import { questions } from '../../constants'
 import { connectToSocket, sendMessage } from '../../socketApi'
+import axios from 'axios'
 const Question = () => {
     const { question, answers } = questions[0]
     const [answer, setAnswer] = useState(answers[0]);
@@ -13,8 +14,15 @@ const Question = () => {
         setAnswer(event.target.value)
     }
 
-    const saveVote = (answer) => {
+    const saveVote = async (answer) => {
         connectToSocket();
+        debugger
+        await axios.post("/votes", {
+            vote: answer
+        }).then(res => {
+            debugger
+            console.log(res.data)
+        }).catch(err => console.log(err))
 
         sendMessage('new-vote', answer)
     }

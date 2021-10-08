@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { io } from 'socket.io-client'
 
 let socket;
@@ -13,10 +14,17 @@ export const connectToSocket = () => {
     });
 }
 
-export const sendMessage = (topic, data) => {
+export const sendMessage = async(topic, data) => {
     if (!socket) {
       return false;
     }
 
+    // await axios.post("http://localhost:3002/votes", { vote: data});
     socket.emit(topic, data);
   };
+
+export const subscribeToNewVote = async() => {
+  socket.on('new-vote', (vote) => {
+    console.log(vote);
+  });
+}
