@@ -8,7 +8,6 @@ const Question = () => {
     const [answer, setAnswer] = useState(answers[0]);
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(answer)
     }
     const handleAnswerChange = (event) => {
         setAnswer(event.target.value)
@@ -16,12 +15,9 @@ const Question = () => {
 
     const saveVote = async (answer) => {
         connectToSocket();
-        debugger
+
         await axios.post("/votes", {
             vote: answer
-        }).then(res => {
-            debugger
-            console.log(res.data)
         }).catch(err => console.log(err))
 
         sendMessage('new-vote', answer)

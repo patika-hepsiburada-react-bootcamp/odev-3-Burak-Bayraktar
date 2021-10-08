@@ -1,16 +1,15 @@
-import axios from 'axios';
 import { io } from 'socket.io-client'
 
 let socket;
 export const connectToSocket = () => {
-    socket = io('http://localhost:3002', { transports: ['websocket' ]});
-
+  console.log('Connectting');
+  socket = io('http://127.0.0.1:3002/', { transports: ['websocket' ]});
     socket.on('connect', () => {
         console.log('connected');
       });
     
     socket.on('connect_error', () => {
-      console.error('Connection failed.');
+      console.error('Connection failed from socketApi.js');
     });
 }
 
@@ -19,12 +18,11 @@ export const sendMessage = async(topic, data) => {
       return false;
     }
 
-    // await axios.post("http://localhost:3002/votes", { vote: data});
     socket.emit(topic, data);
   };
 
-export const subscribeToNewVote = async() => {
-  socket.on('new-vote', (vote) => {
-    console.log(vote);
+export const subscribeToNewVote = async(cb) => {
+  socket.on('new-vote', (message) => {
+    cb(message);
   });
 }

@@ -1,42 +1,44 @@
-import React, { useEffect } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react'
 import { Bar } from 'react-chartjs-2'
 import styles from './style.module.css'
-import axios from 'axios'
 import { questions } from '../../constants'
 import { styling } from './chartConfig'
 import { connectToSocket, subscribeToNewVote } from '../../socketApi'
+import { fetchVotes } from '../../utils/utils'
+
 const SurveyChart = () => {
-    const { answers } = questions[0]
-    const labels = answers
-    const values = [10,20,30]
-    
+    const [votes, setVotes] = useState([])
+    const { answers } = questions[0]    
     useEffect(() => {
-        axios.get("/votes", {headers: {"Access-Control-Allow-Origin": "*"}}).then(res => {
-            console.log(res.data)
-        }).catch(err => console.log(err))
+        fetchVotes(answers, setVotes);
     }, [])
 
     useEffect(() => {
         connectToSocket();
-    
-        subscribeToNewVote((message) => {
-          console.log(message);
-        //   setChat((prev) => [...prev, { message }]);
+
+        subscribeToNewVote(() => {
+            fetchVotes(answers, setVotes);
         });
-      }, []);
+    }, []);
 
     const data = {
-        labels: labels,
+        labels: Object.keys(votes),
         datasets: [{
         ...styling,
         label: "Survey",
-        data: values
+        data: Object.values(votes),
         }]
     };
     
     return (
         <div className={styles.survey}>
             <Bar data={data} height={25} width={50} />
+            <div>
+                <pre>
+                    { JSON.stringify(votes, null,2)}
+                </pre>
+            </div>
         </div>
     )
 }
