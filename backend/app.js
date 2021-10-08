@@ -38,7 +38,7 @@ server.listen(PORT, () => {
 
 
 mongoose
-    .connect("mongodb://dbBurak:Burak1907@burakcluster-shard-00-00.fi2ry.mongodb.net:27017,burakcluster-shard-00-01.fi2ry.mongodb.net:27017,burakcluster-shard-00-02.fi2ry.mongodb.net:27017/vote_app?ssl=true&replicaSet=atlas-evr6p4-shard-0&authSource=admin&retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("connected");
     }).catch((err) => console.log(err))
