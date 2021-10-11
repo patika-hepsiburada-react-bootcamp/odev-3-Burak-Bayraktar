@@ -34,11 +34,6 @@ const SurveyChart = () => {
     return (
         <div className={styles.survey}>
             <Bar data={data} height={25} width={50} />
-            <div>
-                <pre>
-                    { JSON.stringify(votes, null,2)}
-                </pre>
-            </div>
         </div>
     )
 }
